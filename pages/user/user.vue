@@ -1,7 +1,66 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-red" :isBack="true"><block slot="backText">返回</block><block slot="content">我的</block></cu-custom>
-		<view class="">用户</view>
+		<cu-custom  bgColor="bg-gradual-blue" :isBack="false"><block slot="backText">返回</block><block slot="content">个人中心</block></cu-custom>
+		<view class="flex solid-bottom padding align-center">
+			<view class="cu-avatar xl round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);"></view>
+			<view>
+				<view class="text-grey margin-left">正义天使 凯尔</view>
+			</view>
+		</view>
+		
+		<view class="cu-list menu" :class="[menuBorder?'sm-border':'',menuCard?'card-menu margin-top':'']">
+				<view class="cu-item" :class="menuArrow?'arrow':''">
+					<view class="content">
+						<text class="icon-circlefill text-grey"></text>
+						<text class="text-grey">我的文章</text>
+					</view>
+				</view>
+				<view class="cu-item" :class="menuArrow?'arrow':''">
+					<view class="content">
+						<image src="/static/logo.png" class="png" mode="aspectFit"></image>
+						<text class="text-grey">我的动弹</text>
+					</view>
+				</view>
+				<view class="cu-item" :class="menuArrow?'arrow':''">
+					<button class="cu-btn content" open-type="contact">
+						<text class="icon-btn text-olive"></text>
+						<text class="text-grey">意见反馈</text>
+					</button>
+				</view>
+				
+				<view class="cu-item" :class="menuArrow?'arrow':''">
+					<view class="content">
+						<text class="icon-tagfill text-red  margin-right-xs"></text>
+						<text class="text-grey">标签</text>
+					</view>
+					<view class="action">
+						<view class="cu-tag round bg-orange light">音乐</view>
+						<view class="cu-tag round bg-olive light">电影</view>
+						<view class="cu-tag round bg-blue light">旅行</view>
+					</view>
+				</view>
+				<view class="cu-item" :class="menuArrow?'arrow':''">
+					<view class="content" @tap="showModal" data-target="Modal">
+						<text class="icon-discoverfill text-orange"></text>
+						<text class="text-grey">关于我们</text>
+					</view>
+				</view>
+				
+				<view class="cu-modal" :class="modalName=='Modal'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">温馨提示</view>
+					<view class="action" @tap="hideModal">
+						<text class="icon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					来了老弟
+				</view>
+			</view>
+		</view>
+				
+				</view>
 	</view>
 </template>
 
@@ -9,8 +68,18 @@
 	export default {
 		data() {
 			return {
-				
+				menuArrow: true,
+				modalName: null,
 			};
+		},
+		methods: {
+			showModal(e) {
+				console.log(e);
+				this.modalName = e.currentTarget.dataset.target
+			},
+			hideModal(e) {
+				this.modalName = null
+			}
 		}
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true"><block slot="backText">返回</block><block slot="content">动弹</block></cu-custom>
+		<cu-custom bgColor="bg-gradual-green" :isBack="false"><block slot="backText">返回</block><block slot="content">动弹</block></cu-custom>
 		
 		<view class="cu-form-group margin-top">
 			<textarea maxlength="50"  placeholder="请分享美好的事物"></textarea>

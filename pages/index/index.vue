@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block><block slot="content">首页</block></cu-custom>
+		<cu-custom bgColor="bg-gradual-pink" :isBack="false"><block slot="backText">返回</block><block slot="content">首页</block></cu-custom>
         <swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
          :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
          indicator-active-color="#0081ff">
