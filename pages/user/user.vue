@@ -2,10 +2,13 @@
 	<view>
 		<cu-custom  bgColor="bg-gradual-blue" :isBack="false"><block slot="backText">返回</block><block slot="content">个人中心</block></cu-custom>
 		<view class="flex solid-bottom padding align-center">
-			<view class="cu-avatar xl round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);"></view>
+			<image class="cu-avatar xl round margin-left" :src="avatarUrl"></image>
 			<view>
-				<view class="text-grey margin-left">正义天使 凯尔</view>
+				<view class="text-grey margin-left">{{ nickName }}</view>
 			</view>
+		</view>
+		<view v-if="isShow" class="padding flex flex-direction">
+			<button class="cu-btn bg-grey lg" open-type="getUserInfo" lang="zh_CN" @getuserinfo="getuserinfo">登陆</button>
 		</view>
 		
 		<view class="cu-list menu" :class="[menuBorder?'sm-border':'',menuCard?'card-menu margin-top':'']">
@@ -70,6 +73,9 @@
 			return {
 				menuArrow: true,
 				modalName: null,
+				nickName:'',
+				avatarUrl:'',
+				isShow:true,
 			};
 		},
 		methods: {
@@ -79,7 +85,24 @@
 			},
 			hideModal(e) {
 				this.modalName = null
-			}
+			},
+			getuserinfo(e) {
+				this.avatarUrl = e.detail.userInfo.avatarUrl;
+				this.nickName = e.detail.userInfo.nickName;
+				this.isShow = false;
+				uni.login({
+				  provider: 'weixin',
+				  success: function (loginRes) {
+					console.log(loginRes);
+					uni.getUserInfo({
+					  provider: 'weixin',
+					  success: function (infoRes) {
+						console.log('用户昵称为：' + infoRes.userInfo.nickName);
+					  }
+					});
+				  }
+				});
+			},
 		}
 	}
 </script>
