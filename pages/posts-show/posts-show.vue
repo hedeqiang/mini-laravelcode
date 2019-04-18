@@ -7,7 +7,7 @@
 		<view class="content post-content">
 			<view class="cu-bar bg-shadeBottom"> <text class="text-cut align-center">{{post.title}}</text></view>
 			<view class="flex-sub">
-				 <wxParse :content="body" @preview="preview" @navigate="navigate" />
+				
 			</view>
 		</view>
 	</view>
@@ -18,9 +18,6 @@
 	import javascript from 'highlight.js/lib/languages/javascript';
 	hljs.registerLanguage('javascript', javascript);
 	
-	import marked from 'marked'
-	import wxParse from 'mpvue-wxparse'
-
 	export default {
 		data() {
 			return {
@@ -28,9 +25,7 @@
 				body:','
 			};
 		},
-		components: {
-			wxParse
-		},
+		
 		onLoad(e) {
 			console.log(e);
 			uni.request({
@@ -47,12 +42,7 @@
 			});
 		},
 		methods: {
-			preview(src, e) {
-      // do something
-			},
-			navigate(href, e) {
-				// do something
-			}
+	
 		},
 	}
 </script>

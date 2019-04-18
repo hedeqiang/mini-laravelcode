@@ -101,6 +101,9 @@
 			// 初始化towerSwiper 传已有的数组名即可
 		},
 		mounted() {
+			uni.showLoading({
+				title:'加载中'
+			})
 			uni.request({
 				url: 'https://laravelcode.info/api/posts?include=user,category',
 				method: 'GET',
@@ -108,6 +111,7 @@
 				success: res => {
 					this.posts = res.data.data;
 					this.created_at = moment(res.data.data.created_at).startOf('day').fromNow();
+					uni.hideLoading();
 				},
 				fail: () => {},
 				complete: () => {}
