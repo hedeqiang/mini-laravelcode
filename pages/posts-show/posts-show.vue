@@ -4,9 +4,11 @@
 			<block slot="backText">返回</block><block slot="content">详情</block>
 		</cu-custom>
 		
-		<view class="post-content">
-			<view class="cu-bar bg-shadeBottom"> <text class="text-cut align-center">我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。</text></view>
-		
+		<view class="content post-content">
+			<view class="cu-bar bg-shadeBottom"> <text class="text-cut align-center">{{post.title}}</text></view>
+			<view class="flex-sub">
+				 <wxParse :content="body" @preview="preview" @navigate="navigate" />
+			</view>
 		</view>
 	</view>
 </template>
@@ -15,13 +17,43 @@
 	import hljs from 'highlight.js';
 	import javascript from 'highlight.js/lib/languages/javascript';
 	hljs.registerLanguage('javascript', javascript);
+	
+	import marked from 'marked'
+	import wxParse from 'mpvue-wxparse'
 
 	export default {
 		data() {
 			return {
-				
+				post:[],
+				body:','
 			};
-		}
+		},
+		components: {
+			wxParse
+		},
+		onLoad(e) {
+			console.log(e);
+			uni.request({
+				url: 'https://laravelcode.info/api/posts/'+ e.postid,
+				method: 'GET',
+				data: {},
+				success: res => {
+					console.log(res.data);
+					this.post = res.data;
+					this.body = marked(res.data.body);
+				},
+				fail: () => {},
+				complete: () => {}
+			});
+		},
+		methods: {
+			preview(src, e) {
+      // do something
+			},
+			navigate(href, e) {
+				// do something
+			}
+		},
 	}
 </script>
 

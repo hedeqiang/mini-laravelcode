@@ -13,26 +13,26 @@
         </swiper>
 		
 		<view class="post-list">
-			<view v-for="(item,index) in swiperList" :key="index">
-				<view class="cu-card case" :class="isCard?'no-card':''" @click="goToShow">
+			<view v-for="(post,index) in posts" :key="index">
+				<view class="cu-card case" :class="isCard?'no-card':''" @tap="onenShow" :data-post-id="post.id">
 					<view class="cu-item shadow">
 						<view class="image">
 							<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"
 							 mode="widthFix"></image>
-							<view class="cu-tag bg-blue">史诗</view>
-							<view class="cu-bar bg-shadeBottom"> <text class="text-cut">我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。</text></view>
+							<view class="cu-tag bg-blue">{{posts[index].category.name}}</view>
+							<view class="cu-bar bg-shadeBottom"> <text class="text-cut">{{post.title}}</text></view>
 						</view>
 						<view class="cu-list menu-avatar">
 							<view class="cu-item">
-								<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+								<image class="cu-avatar round lg" :src="posts[index].user.avatar"></image>
 								<view class="content flex-sub">
-									<view class="text-grey">正义天使 凯尔</view>
+									<view class="text-grey">{{post.user.name}}</view>
 									<view class="text-gray text-sm flex justify-between">
-										十天前
+										{{ post.created_at | moment }}
 										<view class="text-gray text-sm">
-											<text class="icon-attentionfill margin-lr-xs"></text> 10
-											<text class="icon-appreciatefill margin-lr-xs"></text> 20
-											<text class="icon-messagefill margin-lr-xs"></text> 30
+											<text class="icon-attentionfill margin-lr-xs"></text> {{post.view_count}}
+											<!-- <text class="icon-appreciatefill margin-lr-xs"></text> 20 -->
+											<text class="icon-messagefill margin-lr-xs"></text> {{post.reply_count}}
 										</view>
 									</view>
 								</view>
@@ -49,11 +49,14 @@
 </template>
 
 <script>
+	import moment from 'moment'
 	export default {
 		data() {
 			return {
 				isCard: true,
 				cardCur: 0,
+				posts:[],
+				created_at:"",
 				swiperList: [{
 					id: 0,
 					type: 'image',
@@ -88,9 +91,27 @@
 				direction: ''
 			};
 		},
+		filters: {
+			moment: function(value) {
+				return moment(value).startOf('day').fromNow();
+			}
+		},
 		onLoad() {
 			this.TowerSwiper('swiperList');
 			// 初始化towerSwiper 传已有的数组名即可
+		},
+		mounted() {
+			uni.request({
+				url: 'https://laravelcode.info/api/posts?include=user,category',
+				method: 'GET',
+				data: {},
+				success: res => {
+					this.posts = res.data.data;
+					this.created_at = moment(res.data.data.created_at).startOf('day').fromNow();
+				},
+				fail: () => {},
+				complete: () => {}
+			});
 		},
 		methods: {
 			DotStyle(e) {
@@ -150,9 +171,11 @@
 			IsCard(e) {
 				this.isCard = e.detail.value
 			},
-			goToShow(){
+			onenShow(e){
+				//console.log(e.currentTarget.dataset.postId);
+				var postId = e.currentTarget.dataset.postId;
 				uni.navigateTo({
-					url:'../posts-show/posts-show'
+					url:'../posts-show/posts-show?postid='+postId
 				})
 			}
 		}

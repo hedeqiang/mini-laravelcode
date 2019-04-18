@@ -8,99 +8,120 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      isCard: true,
-      cardCur: 0,
-      swiperList: [{
-        id: 0,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg' },
-      {
-        id: 1,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg' },
-      {
-        id: 2,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg' },
-      {
-        id: 3,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg' },
-      {
-        id: 4,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg' },
-      {
-        id: 5,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg' },
-      {
-        id: 6,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg' }],
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-      dotStyle: false,
-      towerStart: 0,
-      direction: '' };
 
-  },
-  onLoad: function onLoad() {
-    this.TowerSwiper('swiperList');
-    // 初始化towerSwiper 传已有的数组名即可
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _moment2 = _interopRequireDefault(__webpack_require__(/*! moment */ "E:\\mini\\mini-laravelcode\\node_modules\\moment\\moment.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { isCard: true, cardCur: 0, posts: [], created_at: "", swiperList: [{ id: 0, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg' }, { id: 1, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg' }, { id: 2, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg' }, { id: 3, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg' }, { id: 4, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg' }, { id: 5, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg' }, { id: 6, type: 'image', url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg' }], dotStyle: false, towerStart: 0, direction: '' };}, filters: { moment: function moment(value) {return (0, _moment2.default)(value).startOf('day').fromNow();} }, onLoad: function onLoad() {this.TowerSwiper('swiperList'); // 初始化towerSwiper 传已有的数组名即可
+  }, mounted: function mounted() {var _this = this;
+    uni.request({
+      url: 'https://laravelcode.info/api/posts?include=user,category',
+      method: 'GET',
+      data: {},
+      success: function success(res) {
+        _this.posts = res.data.data;
+        _this.created_at = (0, _moment2.default)(res.data.data.created_at).startOf('day').fromNow();
+      },
+      fail: function fail() {},
+      complete: function complete() {} });
+
   },
   methods: {
     DotStyle: function DotStyle(e) {
@@ -160,9 +181,11 @@ var _default =
     IsCard: function IsCard(e) {
       this.isCard = e.detail.value;
     },
-    goToShow: function goToShow() {
+    onenShow: function onenShow(e) {
+      //console.log(e.currentTarget.dataset.postId);
+      var postId = e.currentTarget.dataset.postId;
       uni.navigateTo({
-        url: '../posts-show/posts-show' });
+        url: '../posts-show/posts-show?postid=' + postId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
@@ -195,6 +218,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.posts.map(function(post, index) {
+    var f0 = _vm._f("moment")(post.created_at)
+
+    return {
+      $orig: _vm.__get_orig(post),
+      f0: f0
+    }
+  })
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

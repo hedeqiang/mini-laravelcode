@@ -7,7 +7,7 @@
     "urlCheck": false
   },
   "compileType": "miniprogram",
-  "libVersion": "",
+  "libVersion": "2.6.4",
   "appid": "wxd93355fd5611461f",
   "projectname": "color-ui",
   "condition": {

@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
 
 
 
@@ -23,7 +25,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 var _highlight = _interopRequireDefault(__webpack_require__(/*! highlight.js */ "E:\\mini\\mini-laravelcode\\node_modules\\highlight.js\\lib\\index.js"));
-var _javascript = _interopRequireDefault(__webpack_require__(/*! highlight.js/lib/languages/javascript */ "E:\\mini\\mini-laravelcode\\node_modules\\highlight.js\\lib\\languages\\javascript.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _javascript = _interopRequireDefault(__webpack_require__(/*! highlight.js/lib/languages/javascript */ "E:\\mini\\mini-laravelcode\\node_modules\\highlight.js\\lib\\languages\\javascript.js"));
+
+
+var _marked = _interopRequireDefault(__webpack_require__(/*! marked */ "E:\\mini\\mini-laravelcode\\node_modules\\marked\\lib\\marked.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -36,7 +41,29 @@ var _javascript = _interopRequireDefault(__webpack_require__(/*! highlight.js/li
 //
 //
 //
-_highlight.default.registerLanguage('javascript', _javascript.default);var _default = { data: function data() {return {};} };exports.default = _default;
+//
+//
+_highlight.default.registerLanguage('javascript', _javascript.default);var wxParse = function wxParse() {return Promise.all(/*! import() | node-modules/mpvue-wxparse/src/wxParse */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/mpvue-wxparse/src/wxParse")]).then(__webpack_require__.bind(null, /*! mpvue-wxparse */ "E:\\mini\\mini-laravelcode\\node_modules\\mpvue-wxparse\\src\\wxParse.vue"));};var _default = { data: function data() {return { post: [], body: ',' };}, components: { wxParse: wxParse }, onLoad: function onLoad(e) {var _this = this;console.log(e);uni.request({
+      url: 'https://laravelcode.info/api/posts/' + e.postid,
+      method: 'GET',
+      data: {},
+      success: function success(res) {
+        console.log(res.data);
+        _this.post = res.data;
+        _this.body = (0, _marked.default)(res.data.body);
+      },
+      fail: function fail() {},
+      complete: function complete() {} });
+
+  },
+  methods: {
+    preview: function preview(src, e) {
+      // do something
+    },
+    navigate: function navigate(href, e) {
+      // do something
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
