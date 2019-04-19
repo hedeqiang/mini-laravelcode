@@ -19,7 +19,7 @@
 						<view class="image">
 							<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"
 							 mode="widthFix"></image>
-							<view class="cu-tag bg-blue">{{posts[index].category.name}}</view>
+							<view class="cu-tag" :style="{color:posts[index].category.color}">{{posts[index].category.name}}</view>
 							<view class="cu-bar bg-shadeBottom"> <text class="text-cut">{{post.title}}</text></view>
 						</view>
 						<view class="cu-list menu-avatar">
@@ -93,6 +93,7 @@
 		},
 		filters: {
 			moment: function(value) {
+				moment.locale('zh-cn');
 				return moment(value).startOf('day').fromNow();
 			}
 		},
